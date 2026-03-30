@@ -1,0 +1,13 @@
+#Set the project : 
+
+gcloud config set project PROJECT_ID
+
+#Get the K8s cluster credentials :
+
+gcloud container clusters get-credentials CLUSTER_NAME \
+  --zone ZONE \
+  --project PROJECT_ID
+
+Test the credentials : 
+
+kubectl get pods -A
