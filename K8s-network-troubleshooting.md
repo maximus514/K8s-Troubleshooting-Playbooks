@@ -1,11 +1,12 @@
 # Deploy a test pod : 
 
+```bash
 kubectl run busybox \
   --image=busybox \
   --restart=Never \
   -n default \
   --command -- sleep 3600
-
+```
 # If --command is not specified, BusyBox starts and immediately exits
 
 # Remote to the pod : 
@@ -46,3 +47,45 @@ ifconfig
 
 route -n
 
+# Describe Pod 
+
+kubectl describe pod POD_NAME -n NAMESPACE
+
+# VIEW LOGS 
+
+kubectl logs POD_NAME -c CONTAINER_NAME
+
+# For an Image with better networking tools, use "nicolaka/netshoot" : 
+
+kubectl run netshoot \
+  --image=nicolaka/netshoot \
+  --restart=Never \
+  -it -- bash
+
+## ADVANCE COMMANDS THAT COME WITH netshoot ##
+
+# MTR - network diagnostic tool that combines traceroute and ping functionality into one interactive, real-time command-line interface
+
+mtr google.com
+
+# Traceroute - view route to destination 
+
+traceroute google.com
+
+# Curl - View HTTP response 
+
+curl -v google.com
+
+# Dig - DNS resolution 
+
+dig google.com # uses resolv.conf dns server
+
+dig @8.8.8.8 google.com # force to resovle from specific dns server 
+
+# TCP Dump - view network traffic 
+
+tcpdump -i any -w /tmp/capture.pcap
+
+# Exit the container, then run:
+
+kubectl cp default/netshoot:/tmp/capture.pcap ./capture.pcap
